@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Archivos</title>
 </head>
 <body>
-    
+    <div class="container">
+        <h2>Subir Archivos</h2>
+        <form action="" id="fileform" method="POST">
+            <div class="input-form">
+              <input type="file" id="fileInput" class="file-input" multiple accept=".pdf,.doc,.docx,.jpg,.png,.xlsx,.zip">  
+            </div>
+            <div class="botton">
+                <input type="submit" value="Enviar" id="submitButton">
+            </div>
+        </form>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
