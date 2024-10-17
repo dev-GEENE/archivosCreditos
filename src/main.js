@@ -13,6 +13,7 @@ let codigoLead = obtenerCodigoLead();
 // Mostrar si el código del lead fue capturado correctamente
 console.log('Código del lead capturado:', codigoLead);
 
+// Agregar el evento de envío al formulario
 document.getElementById('fileform').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevenir el envío estándar del formulario
 
