@@ -34,6 +34,8 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
     }).then(response => {
         if (response.ok) {
             alert('Archivos subidos correctamente');
+            // Recargar la página para limpiar el formulario
+            location.reload();
         } else {
             alert('Error al subir los archivos');
         }
@@ -42,3 +44,4 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
         alert('Error en la solicitud');
     });
 });
+
