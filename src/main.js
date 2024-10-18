@@ -1,9 +1,6 @@
 // Función para obtener el código del lead desde la URL
 function obtenerCodigoLeadDesdeURL() {
-    // Obtener los parámetros de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    
-    // Buscar el parámetro "codigo"
     return urlParams.get('codigo');  // Devuelve el valor del parámetro 'codigo'
 }
 
@@ -23,8 +20,22 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
         return; // Evitar seguir con el envío si no hay código del lead
     }
 
+    // Obtener el archivo seleccionado del input de archivos
+    const fileInput = document.getElementById('fileInput');
+    const files = fileInput.files;
+
+    // Verificación: Si no se selecciona ningún archivo, mostramos un mensaje de alerta
+    if (files.length === 0) {
+        alert('Por favor selecciona al menos un archivo para subir.');
+        return; // Evitar seguir con el envío si no hay archivos seleccionados
+    }
+
     // Crear un objeto FormData con los datos del formulario
-    const formData = new FormData(document.getElementById('fileform'));
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        formData.append('files[]', files[i]);  // Añadir los archivos seleccionados al FormData
+    }
+
     formData.append('leadCode', codigoLead);  // Añadir el leadCode capturado
 
     // Construir la URL dinámica con el código del lead
