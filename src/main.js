@@ -1,10 +1,15 @@
-// Almacenar el código del lead en el Local Storage
-// Esto se puede ejecutar en la página que proporciona el código del lead
-localStorage.setItem('leadCode', '12345'); // Cambia '12345' por el valor real cuando se acceda
-
-// Función para obtener el valor de leadCode desde el Local Storage
-function obtenerCodigoLead() {
-    return localStorage.getItem('leadCode');  // Intenta obtener el valor de 'leadCode'
+// Función para obtener el código del lead desde la URL
+function obtenerCodigoLeadDesdeURL() {
+    // Obtiene la parte de la URL después del signo de interrogación (?)
+    const queryString = window.location.search;
+    
+    // Si hay algún valor después de '?'
+    if (queryString) {
+        // Elimina el '?' del inicio y devuelve el código
+        return queryString.substring(1);  // Por ejemplo, '12345'
+    } else {
+        return null;  // Si no hay código en la URL
+    }
 }
 
 // Capturamos el código del lead desde el Local Storage
