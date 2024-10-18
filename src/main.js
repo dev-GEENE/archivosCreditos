@@ -42,7 +42,7 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
             name: files[i].name,
             type: files[i].type,
             size: files[i].size,
-            content: files[i]  // Aquí puedes ajustar el envío del archivo según lo necesites (como Blob o contenido directo)
+            content: await readFileAsBase64(files[i]) // Función para leer el archivo como base64
         });
     }
 
@@ -69,3 +69,14 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
     });
 });
 
+// Función para leer un archivo como base64
+function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            resolve(reader.result.split(',')[1]); // Devolver solo la parte base64
+        };
+        reader.onerror = (error) => reject(error);
+        reader.readAsDataURL(file); // Leer el archivo como Data URL
+    });
+}
