@@ -11,7 +11,7 @@ let codigoLead = obtenerCodigoLeadDesdeURL();
 console.log('Código del lead capturado desde la URL:', codigoLead);
 
 // Agregar el evento de envío al formulario
-document.getElementById('fileform').addEventListener('submit', function(event) {
+document.getElementById('fileform').addEventListener('submit', async function(event) {  // Hacer la función async
     event.preventDefault(); // Prevenir el envío estándar del formulario
 
     // Si no se encuentra el código del lead, mostramos un mensaje
