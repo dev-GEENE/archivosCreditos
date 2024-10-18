@@ -1,22 +1,17 @@
 // Función para obtener el código del lead desde la URL
 function obtenerCodigoLeadDesdeURL() {
-    // Obtiene la parte de la URL después del signo de interrogación (?)
-    const queryString = window.location.search;
+    // Obtener los parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
     
-    // Si hay algún valor después de '?'
-    if (queryString) {
-        // Elimina el '?' del inicio y devuelve el código
-        return queryString.substring(1);  // Por ejemplo, '12345'
-    } else {
-        return null;  // Si no hay código en la URL
-    }
+    // Buscar el parámetro "codigo"
+    return urlParams.get('codigo');  // Devuelve el valor del parámetro 'codigo'
 }
 
-// Capturamos el código del lead desde el Local Storage
-let codigoLead = obtenerCodigoLead();
+// Capturamos el código del lead desde la URL
+let codigoLead = obtenerCodigoLeadDesdeURL();
 
 // Mostrar si el código del lead fue capturado correctamente
-console.log('Código del lead capturado:', codigoLead);
+console.log('Código del lead capturado desde la URL:', codigoLead);
 
 // Agregar el evento de envío al formulario
 document.getElementById('fileform').addEventListener('submit', function(event) {
@@ -24,7 +19,7 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
 
     // Si no se encuentra el código del lead, mostramos un mensaje
     if (!codigoLead) {
-        alert('No se encontró el código del lead en el almacenamiento');
+        alert('No se encontró el código del lead en la URL');
         return; // Evitar seguir con el envío si no hay código del lead
     }
 
@@ -32,8 +27,11 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
     const formData = new FormData(document.getElementById('fileform'));
     formData.append('leadCode', codigoLead);  // Añadir el leadCode capturado
 
+    // Construir la URL dinámica con el código del lead
+    const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4&leadCode=${codigoLead}`;
+
     // Realizar la solicitud fetch con la URL y el leadCode dinámico
-    fetch(`https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4&leadCode=${codigoLead}`, {
+    fetch(url, {
         method: 'POST',
         body: formData
     }).then(response => {
@@ -49,4 +47,3 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
         alert('Error en la solicitud');
     });
 });
-
