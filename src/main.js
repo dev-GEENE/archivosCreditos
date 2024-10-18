@@ -30,22 +30,36 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
         return; // Evitar seguir con el envío si no hay archivos seleccionados
     }
 
-    // Crear un objeto FormData con los datos del formulario
-    const formData = new FormData(document.getElementById('fileform'));
-    formData.append('leadCode', codigoLead, );  // Añadir el leadCode capturado
+    // Crear un objeto para contener el leadCode y los archivos
+    const formData = {
+        leadCode: codigoLead,
+        files: []
+    };
+
+    // Agregar los archivos al objeto formData
+    for (let i = 0; i < files.length; i++) {
+        formData.files.push({
+            name: files[i].name,
+            type: files[i].type,
+            size: files[i].size,
+            content: files[i]  // Aquí puedes ajustar el envío del archivo según lo necesites (como Blob o contenido directo)
+        });
+    }
 
     // Construir la URL dinámica con el código del lead
-    const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4&leadCode=${codigoLead}`;
+    const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4`;
 
-    // Realizar la solicitud fetch con la URL y el leadCode dinámico
+    // Realizar la solicitud fetch con la URL y el cuerpo en formato JSON
     fetch(url, {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'  // Enviar los datos como JSON
+        },
+        body: JSON.stringify(formData)  // Serializar los datos a JSON
     }).then(response => {
         if (response.ok) {
             alert('Archivos subidos correctamente');
-            // Recargar la página para limpiar el formulario
-            location.reload();
+            location.reload();  // Recargar la página para limpiar el formulario
         } else {
             alert('Error al subir los archivos');
         }
@@ -54,3 +68,4 @@ document.getElementById('fileform').addEventListener('submit', function(event) {
         alert('Error en la solicitud');
     });
 });
+
