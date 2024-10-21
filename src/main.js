@@ -28,12 +28,20 @@ document.getElementById('submitButton').addEventListener('click', function(event
         return; // Evitar seguir con el envío si no hay archivos seleccionados
     }
 
+    const file = files[0]; // Obtener el primer archivo
     const reader = new FileReader();
+    
     reader.onload = function(e) {
         const base64File = e.target.result.split(',')[1]; // Obtener el contenido base64
+
+        // Crear el objeto de datos a enviar
         const data = {
             leadCode: codigoLead,
-            file: base64File // Guardar el contenido del archivo en base64
+            file: {
+                name: file.name,  // Nombre del archivo
+                type: file.type,  // Tipo MIME del archivo
+                content: base64File // Contenido del archivo en base64
+            }
         };
 
         // Construir la URL dinámica con el código del lead
@@ -63,8 +71,5 @@ document.getElementById('submitButton').addEventListener('click', function(event
         });
     };
 
-    reader.readAsDataURL(files[0]); // Leer el archivo como un Data URL
+    reader.readAsDataURL(file); // Leer el archivo como un Data URL
 });
-
-
-
