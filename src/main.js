@@ -11,7 +11,7 @@ let codigoLead = obtenerCodigoLeadDesdeURL();
 console.log('Código del lead capturado desde la URL:', codigoLead);
 
 // Agregar el evento de envío al formulario
-document.getElementById('fileform').addEventListener('submit', async function(event) {  // Hacer la función async
+document.getElementById('fileform').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevenir el envío estándar del formulario
 
     // Si no se encuentra el código del lead, mostramos un mensaje
@@ -30,32 +30,24 @@ document.getElementById('fileform').addEventListener('submit', async function(ev
         return; // Evitar seguir con el envío si no hay archivos seleccionados
     }
 
-    // Crear un objeto para contener el leadCode y los archivos
-    const formData = {
-        leadCode: codigoLead,
-        files: []
-    };
+    // Crear un objeto FormData
+    const formData = new FormData();
 
-    // Agregar los archivos al objeto formData
+    // Agregar el código del lead al FormData
+    formData.append('leadCode', codigoLead);
+
+    // Agregar los archivos al FormData
     for (let i = 0; i < files.length; i++) {
-        formData.files.push({
-            name: files[i].name,
-            type: files[i].type,
-            size: files[i].size,
-            content: await readFileAsBase64(files[i]) // Función para leer el archivo como base64
-        });
+        formData.append('files', files[i]);  // Agregar cada archivo
     }
 
     // Construir la URL dinámica con el código del lead
     const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4`;
 
-    // Realizar la solicitud fetch con la URL y el cuerpo en formato JSON
+    // Realizar la solicitud fetch con la URL y el cuerpo en formato FormData
     fetch(url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'  // Enviar los datos como JSON
-        },
-        body: JSON.stringify(formData)  // Serializar los datos a JSON
+        body: formData  // Enviar FormData directamente
     }).then(response => {
         if (response.ok) {
             alert('Archivos subidos correctamente');
@@ -68,15 +60,3 @@ document.getElementById('fileform').addEventListener('submit', async function(ev
         alert('Error en la solicitud');
     });
 });
-
-// Función para leer un archivo como base64
-function readFileAsBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            resolve(reader.result.split(',')[1]); // Devolver solo la parte base64
-        };
-        reader.onerror = (error) => reject(error);
-        reader.readAsDataURL(file); // Leer el archivo como Data URL
-    });
-}
