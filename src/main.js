@@ -36,7 +36,7 @@ document.getElementById('submitButton').addEventListener('click', function(event
     }
 
     // Construir la URL dinámica con el código del lead
-    const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4`;
+    const url = https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4;
 
     // Realizar la solicitud fetch con la URL y el FormData
     fetch(url, {
@@ -55,5 +55,5 @@ document.getElementById('submitButton').addEventListener('click', function(event
         console.error('Error:', error);
         alert('Error en la solicitud');
     });
-});
+}); 
 
