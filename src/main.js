@@ -31,7 +31,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
         alert('No se encontró el código del lead en la URL');
         return; // Evitar seguir con el envío si no hay código del lead
     }
-
+//
     // Obtener el archivo seleccionado del input de archivos
     const fileInput = document.getElementById('fileInput');
     const files = fileInput.files;
@@ -58,7 +58,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
         });
     }
 
-    // Construir la URL dinámica con el código del lead
+    // URL de tu flujo de Power Automate
     const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4`;
 
     // Realizar la solicitud fetch con la URL y el cuerpo en formato JSON
@@ -83,3 +83,4 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
         alert('Error en la solicitud');
     });
 });
+
