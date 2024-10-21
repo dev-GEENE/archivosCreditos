@@ -23,7 +23,7 @@ function readFileAsBase64(file) {
 }
 
 // Agregar el evento de envío al formulario
-document.getElementById('fileform').addEventListener('submit', async function(event) {  
+document.getElementById('uploadForm').addEventListener('submit', async function(event) {  
     event.preventDefault(); // Prevenir el envío estándar del formulario
 
     // Si no se encuentra el código del lead, mostramos un mensaje
