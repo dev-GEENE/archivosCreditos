@@ -1,16 +1,3 @@
-// Función para obtener el código del lead desde la URL
-function obtenerCodigoLeadDesdeURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('codigo');  // Devuelve el valor del parámetro 'codigo'
-}
-
-// Capturamos el código del lead desde la URL
-let codigoLead = obtenerCodigoLeadDesdeURL();
-
-// Mostrar si el código del lead fue capturado correctamente
-console.log('Código del lead capturado desde la URL:', codigoLead);
-
-// Agregar el evento de envío al formulario
 document.getElementById('fileform').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevenir el envío estándar del formulario
 
@@ -19,7 +6,7 @@ document.getElementById('fileform').addEventListener('submit', async function(ev
         alert('No se encontró el código del lead en la URL');
         return; // Evitar seguir con el envío si no hay código del lead
     }
-
+//
     // Obtener el archivo seleccionado del input de archivos
     const fileInput = document.getElementById('fileInput');
     const files = fileInput.files;
@@ -38,10 +25,10 @@ document.getElementById('fileform').addEventListener('submit', async function(ev
 
     // Agregar los archivos al FormData
     for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i]);  // Agregar cada archivo
+        formData.append('file', files[i]);  // Enviar archivo con el nombre "file"
     }
 
-    // Construir la URL dinámica con el código del lead
+    // URL de tu flujo de Power Automate
     const url = `https://prod-12.brazilsouth.logic.azure.com:443/workflows/3a39a1f99dd94be4b403b0bdcfdce619/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWd2VCp0IR7QnXioG8UvWVx-ZekBVJ55uPkI99-IRo4`;
 
     // Realizar la solicitud fetch con la URL y el cuerpo en formato FormData
@@ -60,3 +47,4 @@ document.getElementById('fileform').addEventListener('submit', async function(ev
         alert('Error en la solicitud');
     });
 });
+
