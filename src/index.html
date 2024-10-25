@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Subir Archivos</h2>
+        <h2 id="resultado">Subir Archivos</h2>
         <form id="fileform" method="POST" enctype="multipart/form-data">
             <div class="input-form">
                 <input type="file" id="fileInput" class="file-input" multiple accept>  
@@ -19,6 +19,19 @@
         </form>
     </div>
     <script src="main.js"></script>
+    <script>
+        // Función para obtener el valor de un parámetro de la URL
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+    
+        // Obtener el valor del parámetro 'nombre'
+        const nombre = getParameterByName('nombre');
+    
+        // Mostrar el valor en la etiqueta
+        document.getElementById('resultado').textContent = nombre ? 'Subir archivos para: ${nombre}' : 'No se encontró el nombre.';
+    </script>
 </body>
 </html>
 
