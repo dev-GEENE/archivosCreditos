@@ -1,12 +1,15 @@
-// Función para obtener el código del lead desde la URL
-function obtenerCodigoLeadDesdeURL() {
+// Función para obtener el código y el nombre del lead desde la URL
+function obtenerDatosLeadDesdeURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('codigo');  // Devuelve el valor del parámetro 'codigo'
+    const codigo = urlParams.get('codigo');  // Devuelve el valor del parámetro 'codigo'
+    const nombre = urlParams.get('nombre');  // Devuelve el valor del parámetro 'nombre'
+    return { codigo, nombre }; // Devolver un objeto con ambos valores
 }
 
-// Capturamos el código del lead desde la URL
-let codigoLead = obtenerCodigoLeadDesdeURL();
+// Capturamos el código y nombre del lead desde la URL
+let { codigo: codigoLead, nombre: nombreLead } = obtenerDatosLeadDesdeURL();
 console.log('Código del lead capturado desde la URL:', codigoLead);
+console.log('Nombre del lead capturado desde la URL:', nombreLead);
 
 // Agregar el evento de envío al botón
 document.getElementById('submitButton').addEventListener('click', function(event) {  
@@ -34,9 +37,10 @@ document.getElementById('submitButton').addEventListener('click', function(event
     reader.onload = function(e) {
         const base64File = e.target.result.split(',')[1]; // Obtener el contenido base64
 
-        // Crear el objeto de datos a enviar
+        // Crear el objeto de datos a enviar, incluyendo el nombre del lead
         const data = {
             leadCode: codigoLead,
+            leadName: nombreLead, // Agregar el nombre del lead aquí
             file: {
                 name: file.name,  // Nombre del archivo
                 type: file.type,  // Tipo MIME del archivo
