@@ -13,7 +13,7 @@ console.log('Nombre del lead capturado desde la URL:', nombreLead);
 
 // Mostrar el valor en la etiqueta
 // Mostrar el valor en la etiqueta sin comillas
-document.getElementById('resultado').textContent = nombreLead ? `Subir archivos para: ${nombreLead.replace(/"/g, '')}` : 'La URL debe contener el nombre del lead.';
+document.getElementById('resultado').textContent = nombreLead ? `Subir archivos para: ${nombreLead.replace(/"/g, '')}` : 'Subir archivos';
 
 
 // Agregar el evento de envío al botón
